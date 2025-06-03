@@ -7,9 +7,16 @@ let package = Package(
     name: "Networking",
     platforms: [.iOS(.v15)],
     products: [
-        .library(name: "Networking", targets: ["Networking"])
+        .library(name: "Networking",
+                 targets: ["Networking"])
     ],
     targets: [
-        .target(name: "Networking", path: "Sources/Networking")
+        .target(name: "Networking",
+                path: "Sources/Networking"),
+        .testTarget(
+            name: "NetworkingTests",
+            dependencies: ["Networking"],
+            path: "Tests/NetworkingTests"
+        )
     ]
 )

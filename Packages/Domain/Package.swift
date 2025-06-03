@@ -7,9 +7,16 @@ let package = Package(
     name: "Domain",
     platforms: [.iOS(.v15)],
     products: [
-        .library(name: "Domain", targets: ["Domain"])
+        .library(name: "Domain",
+                 targets: ["Domain"])
     ],
     targets: [
-        .target(name: "Domain", path: "Sources/Domain")
+        .target(name: "Domain",
+                path: "Sources/Domain"),
+        .testTarget(
+            name: "DomainTests",
+            dependencies: ["Domain"],
+            path: "Tests/DomainTests"
+        )
     ]
 )
