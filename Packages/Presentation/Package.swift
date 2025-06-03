@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Presentation",
+    defaultLocalization: "en",
     platforms: [.iOS(.v15)],
     products: [
         .library(name: "Presentation",
@@ -12,7 +13,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "Presentation",
-                path: "Sources/Presentation"),
+                path: "Sources/Presentation",
+                resources: [
+                    .process("Resources")
+                ]),
         .testTarget(
             name: "PresentationTests",
             dependencies: ["Presentation"],
