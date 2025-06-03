@@ -40,10 +40,7 @@
 		E6411B0A2DEF7E190067E8B1 /* Exceptions for "Packages" folder in "RickAndMortyApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				/Users/joanmarcsanahuja/Documents/Development/Akkodis/RickAndMortyApp/Packages/Data,
-				/Users/joanmarcsanahuja/Documents/Development/Akkodis/RickAndMortyApp/Packages/Domain,
-				/Users/joanmarcsanahuja/Documents/Development/Akkodis/RickAndMortyApp/Packages/Networking,
-				/Users/joanmarcsanahuja/Documents/Development/Akkodis/RickAndMortyApp/Packages/Presentation,
+				
 			);
 			target = E6411ACD2DEF7B420067E8B1 /* RickAndMortyApp */;
 		};
