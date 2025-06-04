@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import Presentation
 
 @main
 struct RickAndMortyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CharacterListFactory.make()
         }
     }
 }
+
