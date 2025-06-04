@@ -10,30 +10,31 @@ import Domain
 
 public struct CharacterListView: View {
     @StateObject private var viewModel: CharacterListViewModel
-
+    
     public init(viewModel: CharacterListViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = .init(wrappedValue: viewModel)
     }
-
+    
     public var body: some View {
         NavigationView {
-            List(viewModel.characters) { character in
-                HStack {
-                    AsyncImage(url: URL(string: character.imageURL)) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image.resizable().frame(width: 50, height: 50).clipShape(Circle())
-                        default:
-                            ProgressView()
-                        }
+            ScrollView {
+                LazyVGrid(columns: [.init(.flexible()), .init(.flexible()), .init(.flexible())]) {
+                    ForEach(viewModel.characters, id: \.id) { character in
+                        CharacterView(viewModel: character)
+                            .onAppear {
+                                if viewModel.hasReachEnd(of: character) {
+                                    viewModel.fetchCharacters()
+                                }
+                            }
                     }
-                    Text(character.name)
                 }
+                .padding()
             }
             .navigationTitle(viewModel.title)
-            .task {
-                await viewModel.loadCharacters()
+            .onAppear {
+                viewModel.fetchCharacters()
             }
         }
     }
 }
+

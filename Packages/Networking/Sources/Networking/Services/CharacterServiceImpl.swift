@@ -14,8 +14,8 @@ public final class CharacterServiceImpl: CharacterService {
         self.client = client
     }
 
-    public func fetchCharacters() async throws -> Data {
-        let url = URL(string: "https://rickandmortyapi.com/api/character")!
+    public func fetchCharacters(page: Int) async throws -> Data {
+        let url = URL(string: "https://rickandmortyapi.com/api/character?page=\(page)")!
         return try await client.get(from: url)
     }
 }

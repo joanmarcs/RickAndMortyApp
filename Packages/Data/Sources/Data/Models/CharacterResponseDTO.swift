@@ -9,4 +9,5 @@ import Foundation
 
 public struct CharacterResponseDTO: Decodable {
     public let results: [CharacterDTO]
+    public let info: InfoDTO
 }
