@@ -11,7 +11,13 @@ public final class URLSessionHTTPClient: HTTPClient {
     public init() {}
 
     public func get(from url: URL) async throws -> Data {
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let request = URLRequest(
+            url: url,
+            cachePolicy: .returnCacheDataElseLoad,
+            timeoutInterval: 60
+        )
+
+        let (data, _) = try await URLSession.shared.data(for: request)
         return data
     }
 }

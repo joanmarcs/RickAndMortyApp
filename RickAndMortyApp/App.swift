@@ -10,6 +10,14 @@ import Presentation
 
 @main
 struct RickAndMortyApp: App {
+    init() {
+        URLCache.shared = URLCache(
+            memoryCapacity: 20 * 1024 * 1024,
+            diskCapacity: 100 * 1024 * 1024,
+            diskPath: "url_cache"
+        )
+    }
+    
     var body: some Scene {
         WindowGroup {
             CharacterListFactory.make()

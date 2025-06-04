@@ -20,11 +20,24 @@ public final class CharacterListViewModel: ObservableObject {
     @Published public var title: String = ""
     @Published private(set) var characters: [CharacterViewModel] = []
     @Published private(set) var error: String?
-    
+    @Published public var isRefreshing: Bool = false
+
     public init(useCase: FetchCharactersUseCase, localizationService: LocalizationService) {
         self.useCase = useCase
         self.localizationService = localizationService
         self.title = localizationService.localized("characters_title")
+    }
+    
+    func refreshCharacters() async {
+        isRefreshing = true
+        await CacheManager.clearCharacterCache()
+
+        currentPage = 1
+        characters = []
+        fetchCharacters()
+        
+        try? await Task.sleep(nanoseconds: 600_000_000)
+        isRefreshing = false
     }
     
     func fetchCharacters() {
