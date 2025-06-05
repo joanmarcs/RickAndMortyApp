@@ -61,10 +61,10 @@ struct CharacterView: View {
 }
 
 
-#Preview {
-    CharacterView(viewModel: CharacterViewModel(
-        id: 1,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-    ))
-}
+//#Preview {
+//    CharacterView(viewModel: CharacterViewModel(
+//        id: 1,
+//        name: "Rick Sanchez",
+//        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+//    ))
+//}

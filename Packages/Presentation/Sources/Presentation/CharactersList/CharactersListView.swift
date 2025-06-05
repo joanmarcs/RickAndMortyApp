@@ -44,13 +44,18 @@ public struct CharacterListView: View {
                             .init(.flexible())
                         ]) {
                             ForEach(viewModel.characters, id: \.id) { character in
-                                CharacterView(viewModel: character)
-                                    .onAppear {
-                                        if viewModel.hasReachEnd(of: character) {
-                                            viewModel.fetchCharacters()
-                                        }
+                                let destination = CharacterDetailView(
+                                    viewModel: CharacterDetailViewModel(character: character.asDomain(), localizationService: viewModel.localizationService)
+                                )
+                                NavigationLink(destination: destination) {
+                                    CharacterView(viewModel: character)
+                                }
+                                .onAppear {
+                                    if viewModel.hasReachEnd(of: character) {
+                                        viewModel.fetchCharacters()
                                     }
-                                    .padding(4)
+                                }
+                                .padding(4)
                             }
                         }
                         .padding(.horizontal)

@@ -11,3 +11,6 @@
 "no_results" = "No se encontraron personajes.";
 "refreshing" = "Actualizando...";
 "search_placeholder" = "Busca un personaje";
+"status" = "Estado";
+"species" = "Especie";
+"gender" = "Género";

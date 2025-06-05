@@ -11,3 +11,6 @@
 "no_results" = "No characters were found.";
 "refreshing" = "Refreshing...";
 "search_placeholder" = "Search a character";
+"status" = "Status";
+"species" = "Species";
+"gender" = "Gender";

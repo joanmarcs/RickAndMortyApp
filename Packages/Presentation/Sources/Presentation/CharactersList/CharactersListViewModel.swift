@@ -17,12 +17,12 @@ public final class CharacterListViewModel: ObservableObject {
     
     private var currentPage = 1
     private var pages = 1
-    public var isLoading = false
     
     @Published public var title: String = ""
     @Published private(set) var characters: [CharacterViewModel] = []
     @Published private(set) var error: String?
     @Published public var isRefreshing: Bool = false
+    @Published public var isLoading: Bool = false
     @Published public var searchText: String = ""
     
     public init(useCase: FetchCharactersUseCase, localizationService: LocalizationService) {
@@ -60,7 +60,7 @@ public final class CharacterListViewModel: ObservableObject {
             do {
                 let newCharacters = try await usecase.execute(page: self.currentPage, name: self.searchText)
                 let charactersToAdd = newCharacters.results.map {
-                    CharacterViewModel(id: $0.id, name: $0.name, image: $0.imageURL)
+                    CharacterViewModel(id: $0.id, name: $0.name, image: $0.imageURL, status: $0.status, species: $0.species, gender: $0.gender)
                 }
                 pages = newCharacters.pages
                 if currentPage == 1 {
