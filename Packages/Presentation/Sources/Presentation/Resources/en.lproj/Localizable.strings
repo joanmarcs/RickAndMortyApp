@@ -5,5 +5,9 @@
 //  Created by Joan Marc Sanahuja on 3/6/25.
 //
 
-salute = "Hello";
-characters_title = "Characters";
+"salute" = "Hello";
+"characters_title" = "Characters";
+"loading" = "Loading...";
+"no_results" = "No characters were found.";
+"refreshing" = "Refreshing...";
+"search_placeholder" = "Search a character";

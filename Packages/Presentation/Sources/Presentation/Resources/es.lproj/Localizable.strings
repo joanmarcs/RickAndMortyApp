@@ -5,5 +5,9 @@
 //  Created by Joan Marc Sanahuja on 3/6/25.
 //
 
-salute = "Hola";
-characters_title = "Personajes";
+"salute" = "Hola";
+"characters_title" = "Personajes";
+"loading" = "Cargando...";
+"no_results" = "No se encontraron personajes.";
+"refreshing" = "Actualizando...";
+"search_placeholder" = "Busca un personaje";

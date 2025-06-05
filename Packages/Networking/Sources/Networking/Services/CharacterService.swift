@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol CharacterService {
-    func fetchCharacters(page: Int) async throws -> Data
+    func fetchCharacters(page: Int, name: String?) async throws -> Data
 }
 

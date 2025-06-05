@@ -9,15 +9,21 @@ import Foundation
 import Domain
 
 public final class DefaultLocalizationService: LocalizationService {
-    public init() {}
+    private let bundle: Bundle
+
+    public init() {
+        if let preferredLanguage = Locale.preferredLanguages.first,
+           let path = Bundle.module.path(forResource: preferredLanguage.prefix(2).description, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            self.bundle = bundle
+        } else {
+            self.bundle = Bundle.module
+        }
+    }
 
     public func localized(_ key: String) -> String {
-        guard let path = Bundle.module.path(forResource: Locale.preferredLanguages.first, ofType: "lproj"),
-              let bundle = Bundle(path: path) else {
-            return NSLocalizedString(key, bundle: .module, comment: "")
-        }
-
-        return NSLocalizedString(key, bundle: bundle, comment: "")
+        NSLocalizedString(key, bundle: bundle, comment: "")
     }
 }
+
 

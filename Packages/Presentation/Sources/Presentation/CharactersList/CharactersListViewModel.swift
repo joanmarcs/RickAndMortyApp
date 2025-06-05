@@ -7,25 +7,36 @@
 
 import Foundation
 import Domain
+import Combine
 
 @MainActor
 public final class CharacterListViewModel: ObservableObject {
     private let useCase: FetchCharactersUseCase
-    private let localizationService: LocalizationService
+    public let localizationService: LocalizationService
+    private var cancellables = Set<AnyCancellable>()
     
     private var currentPage = 1
     private var pages = 1
-    private var isLoading = false
+    public var isLoading = false
     
     @Published public var title: String = ""
     @Published private(set) var characters: [CharacterViewModel] = []
     @Published private(set) var error: String?
     @Published public var isRefreshing: Bool = false
-
+    @Published public var searchText: String = ""
+    
     public init(useCase: FetchCharactersUseCase, localizationService: LocalizationService) {
         self.useCase = useCase
         self.localizationService = localizationService
         self.title = localizationService.localized("characters_title")
+        
+        $searchText
+            .debounce(for: .milliseconds(400), scheduler: RunLoop.main)
+            .removeDuplicates()
+            .sink { [weak self] _ in
+                Task { self?.searchCharacters() }
+            }
+            .store(in: &cancellables)
     }
     
     func refreshCharacters() async {
@@ -47,7 +58,7 @@ public final class CharacterListViewModel: ObservableObject {
         Task { [weak self] in
             guard let self = self else { return }
             do {
-                let newCharacters = try await usecase.execute(page: self.currentPage)
+                let newCharacters = try await usecase.execute(page: self.currentPage, name: self.searchText)
                 let charactersToAdd = newCharacters.results.map {
                     CharacterViewModel(id: $0.id, name: $0.name, image: $0.imageURL)
                 }
@@ -63,6 +74,12 @@ public final class CharacterListViewModel: ObservableObject {
             }
             isLoading = false
         }
+    }
+    
+    func searchCharacters() {
+        currentPage = 1
+        characters = []
+        fetchCharacters()
     }
     
     func hasReachEnd(of character: CharacterViewModel) -> Bool {

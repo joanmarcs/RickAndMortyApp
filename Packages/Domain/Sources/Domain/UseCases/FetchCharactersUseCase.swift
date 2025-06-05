@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol FetchCharactersUseCase {
-    func execute(page: Int) async throws -> CharacterList
+    func execute(page: Int, name: String?) async throws -> CharacterList
 }
 
 public final class FetchCharactersUseCaseImpl: FetchCharactersUseCase {
@@ -18,7 +18,7 @@ public final class FetchCharactersUseCaseImpl: FetchCharactersUseCase {
         self.repository = repository
     }
 
-    public func execute(page: Int) async throws -> CharacterList {
-        try await repository.fetchCharacters(page: page)
+    public func execute(page: Int, name: String?) async throws -> CharacterList {
+        try await repository.fetchCharacters(page: page, name: name)
     }
 }
