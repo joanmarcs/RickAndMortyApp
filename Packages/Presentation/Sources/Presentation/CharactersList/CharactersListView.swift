@@ -18,13 +18,15 @@ public struct CharacterListView: View {
     public var body: some View {
         NavigationView {
             ZStack {
-                
+                Color(.systemGray6)
+                        .ignoresSafeArea()
                 ScrollView {
                     LazyVGrid(columns: [
                         .init(.flexible()),
                         .init(.flexible()),
                         .init(.flexible())
-                    ]) {
+                    ])
+                    {
                         ForEach(viewModel.characters, id: \.id) { character in
                             CharacterView(viewModel: character)
                                 .onAppear {
@@ -34,7 +36,8 @@ public struct CharacterListView: View {
                                 }
                         }
                     }
-                    .padding()
+                    .padding(.horizontal)
+                    .padding(.top, 8)
                 }
                 .refreshable {
                     await viewModel.refreshCharacters()
@@ -63,5 +66,7 @@ public struct CharacterListView: View {
         }
     }
 }
+
+
 
 
