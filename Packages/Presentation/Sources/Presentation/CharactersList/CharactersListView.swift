@@ -35,13 +35,23 @@ public struct CharacterListView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isShowingFilters = true
-                    } label: {
-                        Image(systemName: hasActiveFilters
-                              ? "line.horizontal.3.decrease.circle.fill"
-                              : "line.horizontal.3.decrease.circle")
-                        .foregroundColor(hasActiveFilters ? .blue : .primary)
+                    HStack {
+                        Button {
+                            viewModel.isGrid.toggle()
+                        } label: {
+                            Image(systemName: viewModel.isGrid
+                                  ? "list.bullet"
+                                  : "square.grid.3x3.fill")
+                            .foregroundColor(.primary)
+                        }
+                        Button {
+                            isShowingFilters = true
+                        } label: {
+                            Image(systemName: hasActiveFilters
+                                  ? "line.horizontal.3.decrease.circle.fill"
+                                  : "line.horizontal.3.decrease.circle")
+                            .foregroundColor(hasActiveFilters ? .blue : .primary)
+                        }
                     }
                 }
             }
@@ -100,32 +110,27 @@ public struct CharacterListView: View {
     
     private var charactersGrid: some View {
         ScrollView {
-            LazyVGrid(columns: [
-                .init(.flexible()),
-                .init(.flexible()),
-                .init(.flexible())
-            ], spacing: 16) {
-                ForEach(viewModel.characters, id: \.id) { character in
-                    let destination = viewModel.coordinator.makeCharacterDetail(for: character.asDomain())
-                    NavigationLink(destination: destination) {
-                        CharacterView(viewModel: character)
-                    }
-                    .onAppear {
-                        if viewModel.hasReachEnd(of: character) {
-                            viewModel.fetchCharacters()
-                        }
-                    }
-                    .padding(4)
+            if viewModel.isGrid {
+                LazyVGrid(columns: [
+                    .init(.flexible()),
+                    .init(.flexible()),
+                    .init(.flexible())
+                ], spacing: 16) {
+                    characterItems
                 }
+                .padding(.horizontal)
+                .padding(.top, 16)
+            } else {
+                LazyVStack(spacing: 8) {
+                    characterItems
+                }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-            .padding(.top, 16)
         }
         .refreshable {
             guard viewModel.searchText.isEmpty else { return }
             await viewModel.refreshCharacters()
         }
-        
     }
     
     private var refreshingOverlay: some View {
@@ -144,5 +149,25 @@ public struct CharacterListView: View {
     private var hasActiveFilters: Bool {
         viewModel.selectedStatus != nil || viewModel.selectedGender != nil
     }
+    
+    private var characterItems: some View {
+        ForEach(viewModel.characters, id: \.id) { character in
+            let destination = viewModel.coordinator.makeCharacterDetail(for: character.asDomain())
+            NavigationLink(destination: destination) {
+                if viewModel.isGrid {
+                    CharacterView(viewModel: character)
+                } else {
+                    CharacterRowView(viewModel: character)
+                }
+            }
+            .onAppear {
+                if viewModel.hasReachEnd(of: character) {
+                    viewModel.fetchCharacters()
+                }
+            }
+            .padding(4)
+        }
+    }
+    
 }
 

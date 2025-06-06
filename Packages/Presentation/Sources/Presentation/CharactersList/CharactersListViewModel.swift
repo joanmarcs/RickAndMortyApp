@@ -27,6 +27,7 @@ public final class CharacterListViewModel: ObservableObject {
     @Published public var searchText: String = ""
     @Published public var selectedStatus: String? = nil
     @Published public var selectedGender: String? = nil
+    @Published public var isGrid: Bool = true
     
     public init(useCase: FetchCharactersUseCase, localizationService: LocalizationService,
                 coordinator: CharacterListCoordinatorProtocol) {
