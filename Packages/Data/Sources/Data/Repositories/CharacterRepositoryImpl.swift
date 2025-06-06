@@ -32,7 +32,12 @@ public final class CharacterRepositoryImpl: CharacterRepository {
             }
             return CharacterList(results: items, pages: decoded.info.pages)
         } catch let error as NetworkError {
-            throw mapNetworkErrorToRepositoryError(error)
+            switch error {
+            case .statusCode(let code) where code == 404:
+                return CharacterList(results: [], pages: 1)
+            default:
+                throw mapNetworkErrorToRepositoryError(error)
+            }
         } catch {
             throw error
         }

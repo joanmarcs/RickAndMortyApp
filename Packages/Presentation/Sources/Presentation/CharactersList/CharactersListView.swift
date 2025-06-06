@@ -5,8 +5,8 @@
 //  Created by Joan Marc Sanahuja on 3/6/25.
 //
 
+import Foundation
 import SwiftUI
-import Domain
 
 public struct CharacterListView: View {
     @StateObject private var viewModel: CharacterListViewModel
@@ -21,61 +21,15 @@ public struct CharacterListView: View {
                 Color(.systemGray6).ignoresSafeArea()
                 
                 if viewModel.isLoading && viewModel.characters.isEmpty {
-                    VStack {
-                        Spacer()
-                        ProgressView(viewModel.localizationService.localized("loading"))
-                            .padding()
-                        Spacer()
-                    }
+                    loadingView
                 } else if !viewModel.isLoading && viewModel.characters.isEmpty && !viewModel.searchText.isEmpty {
-                    VStack {
-                        Spacer()
-                        Text(viewModel.localizationService.localized("no_results"))
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .padding()
-                        Spacer()
-                    }
+                    emptyResultsView
                 } else {
-                    ScrollView {
-                        LazyVGrid(columns: [
-                            .init(.flexible()),
-                            .init(.flexible()),
-                            .init(.flexible())
-                        ]) {
-                            ForEach(viewModel.characters, id: \.id) { character in
-                                let destination = viewModel.coordinator.makeCharacterDetail(for: character.asDomain())
-                                NavigationLink(destination: destination) {
-                                    CharacterView(viewModel: character)
-                                }
-                                .onAppear {
-                                    if viewModel.hasReachEnd(of: character) {
-                                        viewModel.fetchCharacters()
-                                    }
-                                }
-                                .padding(4)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.top, 8)
-                    }
-                    .refreshable {
-                        guard viewModel.searchText.isEmpty else { return }
-                        await viewModel.refreshCharacters()
-                    }
+                    charactersGrid
                 }
+                
                 if viewModel.isRefreshing {
-                    ZStack {
-                        Color.black.opacity(0.2).ignoresSafeArea()
-                        ProgressView(viewModel.localizationService.localized("refreshing"))
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(12)
-                            .shadow(radius: 6)
-                    }
-                    .zIndex(1)
-                    .transition(.opacity)
-                    .animation(.easeInOut(duration: 0.3), value: viewModel.isRefreshing)
+                    refreshingOverlay
                 }
             }
             .navigationTitle(viewModel.title)
@@ -99,4 +53,68 @@ public struct CharacterListView: View {
             }
         }
     }
+    
+    private var loadingView: some View {
+        VStack {
+            Spacer()
+            ProgressView(viewModel.localizationService.localized("loading"))
+                .padding()
+            Spacer()
+        }
+    }
+    
+    private var emptyResultsView: some View {
+        VStack {
+            Spacer()
+            Text(viewModel.localizationService.localized("no_results"))
+                .font(.subheadline)
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+                .padding()
+            Spacer()
+        }
+    }
+    
+    private var charactersGrid: some View {
+        ScrollView {
+            LazyVGrid(columns: [
+                .init(.flexible()),
+                .init(.flexible()),
+                .init(.flexible())
+            ], spacing: 16) {
+                ForEach(viewModel.characters, id: \.id) { character in
+                    let destination = viewModel.coordinator.makeCharacterDetail(for: character.asDomain())
+                    NavigationLink(destination: destination) {
+                        CharacterView(viewModel: character)
+                    }
+                    .onAppear {
+                        if viewModel.hasReachEnd(of: character) {
+                            viewModel.fetchCharacters()
+                        }
+                    }
+                    .padding(4)
+                }
+            }
+            .padding(.horizontal)
+            .padding(.top, 16)
+        }
+        .refreshable {
+            guard viewModel.searchText.isEmpty else { return }
+            await viewModel.refreshCharacters()
+        }
+    }
+    
+    private var refreshingOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.2).ignoresSafeArea()
+            ProgressView(viewModel.localizationService.localized("refreshing"))
+                .padding()
+                .background(Color.white)
+                .cornerRadius(12)
+                .shadow(radius: 6)
+        }
+        .zIndex(1)
+        .transition(.opacity)
+    }
 }
+
