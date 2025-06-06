@@ -15,13 +15,15 @@ public final class CharacterServiceImpl: CharacterService {
     }
 
     public func fetchCharacters(page: Int, name: String?) async throws -> Data {
-        var components = URLComponents(string: "https://rickandmortyapi.com/api/character")!
         var queryItems = [URLQueryItem(name: "page", value: "\(page)")]
         if let name, !name.isEmpty {
             queryItems.append(URLQueryItem(name: "name", value: name))
         }
-        components.queryItems = queryItems
-        return try await client.get(from: components.url!)
-    }
 
+        let endpoint = Endpoint(path: "character", queryItems: queryItems)
+
+        return try await client.request(endpoint: endpoint, method: .get, body: nil)
+    }
 }
+
+

@@ -13,7 +13,8 @@ import Presentation
 public enum CharacterListFactory {
     @MainActor
     public static func make() -> CharacterListView {
-        let client = URLSessionHTTPClient()
+        let config = DefaultNetworkConfig()
+        let client = URLSessionHTTPClient(config: config)
         let service = CharacterServiceImpl(client: client)
         let repository = CharacterRepositoryImpl(service: service)
         let useCase = FetchCharactersUseCaseImpl(repository: repository)

@@ -8,16 +8,45 @@
 import Foundation
 
 public final class URLSessionHTTPClient: HTTPClient {
-    public init() {}
+    private let config: NetworkConfig
+    private let session: URLSession
 
-    public func get(from url: URL) async throws -> Data {
-        let request = URLRequest(
-            url: url,
-            cachePolicy: .returnCacheDataElseLoad,
-            timeoutInterval: 60
-        )
+    public init(config: NetworkConfig, session: URLSession = .shared) {
+        self.config = config
+        self.session = session
+    }
 
-        let (data, _) = try await URLSession.shared.data(for: request)
-        return data
+    public func request(endpoint: Endpoint, method: HTTPMethod, body: Data?) async throws -> Data {
+        guard var components = URLComponents(url: config.baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: false) else {
+            throw NetworkError.invalidURL
+        }
+        components.queryItems = endpoint.queryItems
+
+        guard let url = components.url else {
+            throw NetworkError.invalidURL
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        request.httpBody = body
+        request.cachePolicy = config.cachePolicy
+        request.timeoutInterval = config.timeout
+
+        do {
+            let (data, response) = try await session.data(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.invalidResponse
+            }
+
+            guard (200...299).contains(httpResponse.statusCode) else {
+                throw NetworkError.statusCode(httpResponse.statusCode)
+            }
+
+            return data
+        } catch {
+            throw NetworkError.underlying(error)
+        }
     }
 }
+
