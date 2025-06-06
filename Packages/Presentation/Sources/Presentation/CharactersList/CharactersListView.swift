@@ -161,7 +161,7 @@ public struct CharacterListView: View {
                 }
             }
             .onAppear {
-                if viewModel.hasReachEnd(of: character) {
+                if viewModel.hasReachedEnd(of: character) {
                     viewModel.fetchCharacters()
                 }
             }

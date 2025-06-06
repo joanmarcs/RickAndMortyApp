@@ -123,7 +123,7 @@ public final class CharacterListViewModel: ObservableObject {
         fetchCharacters()
     }
     
-    func hasReachEnd(of character: CharacterViewModel) -> Bool {
+    func hasReachedEnd(of character: CharacterViewModel) -> Bool {
         character.id == characters.last?.id
     }
     
@@ -131,34 +131,35 @@ public final class CharacterListViewModel: ObservableObject {
         error = nil
     }
     
+    private let statusKey = "selectedStatus"
+    private let genderKey = "selectedGender"
+    private let isGridKey = "isGrid"
+    
     private func saveUserConfiguration() {
         if let status = selectedStatus {
-            UserDefaults.standard.set(status, forKey: "selectedStatus")
+            UserDefaults.standard.set(status, forKey: statusKey)
         } else {
-            UserDefaults.standard.removeObject(forKey: "selectedStatus")
+            UserDefaults.standard.removeObject(forKey: statusKey)
         }
-
+        
         if let gender = selectedGender {
-            UserDefaults.standard.set(gender, forKey: "selectedGender")
+            UserDefaults.standard.set(gender, forKey: genderKey)
         } else {
-            UserDefaults.standard.removeObject(forKey: "selectedGender")
+            UserDefaults.standard.removeObject(forKey: genderKey)
         }
-        UserDefaults.standard.set(isGrid, forKey: "isGrid")
+        UserDefaults.standard.set(isGrid, forKey: isGridKey)
+        UserDefaults.standard.synchronize()
     }
 
     private func loadUserConfiguration() {
         isLoadingUserConfiguration = true
-        selectedStatus = UserDefaults.standard.string(forKey: "selectedStatus")
-        selectedGender = UserDefaults.standard.string(forKey: "selectedGender")
-        if UserDefaults.standard.object(forKey: "isGrid") != nil {
-            isGrid = UserDefaults.standard.bool(forKey: "isGrid")
+        selectedStatus = UserDefaults.standard.string(forKey: statusKey)
+        selectedGender = UserDefaults.standard.string(forKey: genderKey)
+        if UserDefaults.standard.object(forKey: isGridKey) != nil {
+            isGrid = UserDefaults.standard.bool(forKey: isGridKey)
         } else {
             isGrid = true
         }
         isLoadingUserConfiguration = false
     }
-    
-    
-
-
 }
