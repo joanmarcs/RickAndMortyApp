@@ -18,9 +18,12 @@ public enum CharacterListFactory {
         let repository = CharacterRepositoryImpl(service: service)
         let useCase = FetchCharactersUseCaseImpl(repository: repository)
         let localizationService = DefaultLocalizationService()
+        let coordinator = CharacterListCoordinator(localizationService: localizationService)
+
         let viewModel = CharacterListViewModel(
                 useCase: useCase,
-                localizationService: localizationService
+                localizationService: localizationService,
+                coordinator: coordinator
             )
         return CharacterListView(viewModel: viewModel)
     }

@@ -10,6 +10,9 @@ import Presentation
 
 @main
 struct RickAndMortyApp: App {
+    
+    let coordinator = AppCoordinator()
+    
     init() {
         URLCache.shared = URLCache(
             memoryCapacity: 20 * 1024 * 1024,
@@ -20,7 +23,7 @@ struct RickAndMortyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CharacterListFactory.make()
+            coordinator.start()
         }
     }
 }

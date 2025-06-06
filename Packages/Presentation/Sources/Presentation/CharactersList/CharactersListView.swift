@@ -44,9 +44,7 @@ public struct CharacterListView: View {
                             .init(.flexible())
                         ]) {
                             ForEach(viewModel.characters, id: \.id) { character in
-                                let destination = CharacterDetailView(
-                                    viewModel: CharacterDetailViewModel(character: character.asDomain(), localizationService: viewModel.localizationService)
-                                )
+                                let destination = viewModel.coordinator.makeCharacterDetail(for: character.asDomain())
                                 NavigationLink(destination: destination) {
                                     CharacterView(viewModel: character)
                                 }

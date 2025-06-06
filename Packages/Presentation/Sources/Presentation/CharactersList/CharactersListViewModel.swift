@@ -13,6 +13,7 @@ import Combine
 public final class CharacterListViewModel: ObservableObject {
     private let useCase: FetchCharactersUseCase
     public let localizationService: LocalizationService
+    public let coordinator: CharacterListCoordinatorProtocol
     private var cancellables = Set<AnyCancellable>()
     
     private var currentPage = 1
@@ -25,9 +26,11 @@ public final class CharacterListViewModel: ObservableObject {
     @Published public var isLoading: Bool = false
     @Published public var searchText: String = ""
     
-    public init(useCase: FetchCharactersUseCase, localizationService: LocalizationService) {
+    public init(useCase: FetchCharactersUseCase, localizationService: LocalizationService,
+                coordinator: CharacterListCoordinatorProtocol) {
         self.useCase = useCase
         self.localizationService = localizationService
+        self.coordinator = coordinator
         self.title = localizationService.localized("characters_title")
         
         $searchText
