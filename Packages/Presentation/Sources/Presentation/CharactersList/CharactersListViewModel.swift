@@ -73,7 +73,11 @@ public final class CharacterListViewModel: ObservableObject {
                 }
                 currentPage += 1
             } catch {
-                self.error = error.localizedDescription
+                if let repositoryError = error as? RepositoryError {
+                    self.error = repositoryError.localized(using: localizationService)
+                } else {
+                    self.error = localizationService.localized("error_unknown")
+                }
             }
             isLoading = false
         }
@@ -88,4 +92,9 @@ public final class CharacterListViewModel: ObservableObject {
     func hasReachEnd(of character: CharacterViewModel) -> Bool {
         character.id == characters.last?.id
     }
+    
+    func clearError() {
+        error = nil
+    }
+
 }

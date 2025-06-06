@@ -14,3 +14,11 @@
 "status" = "Estado";
 "species" = "Especie";
 "gender" = "Género";
+"error_invalid_url" = "URL no válida.";
+"error_invalid_response" = "Respuesta inválida del servidor.";
+"error_no_results" = "Sin resultados.";
+"error_server_generic" = "Error de servidor. Vuelve a intentarlo más tarde.";
+"error_network_generic" = "Error de red. Por favor, revisa tu conexión.";
+"error_unknown" = "Ha ocurrido un error desconocido.";
+"error_alert_title" = "Error";
+"general_accept" = "Aceptar";

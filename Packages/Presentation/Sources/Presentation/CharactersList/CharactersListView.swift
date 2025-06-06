@@ -85,6 +85,18 @@ public struct CharacterListView: View {
             .onAppear {
                 viewModel.fetchCharacters()
             }
+            .alert(isPresented: Binding<Bool>(
+                get: { viewModel.error != nil },
+                set: { _ in }
+            )) {
+                Alert(
+                    title: Text(viewModel.localizationService.localized("error_alert_title")),
+                    message: Text(viewModel.error ?? ""),
+                    dismissButton: .default(Text(viewModel.localizationService.localized("general_accept")), action: {
+                        viewModel.clearError()
+                    })
+                )
+            }
         }
     }
 }

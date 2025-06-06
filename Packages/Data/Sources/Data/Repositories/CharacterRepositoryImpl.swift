@@ -17,21 +17,43 @@ public final class CharacterRepositoryImpl: CharacterRepository {
     }
     
     public func fetchCharacters(page: Int, name: String?) async throws -> CharacterList {
-        let data = try await service.fetchCharacters(page: page, name: name)
-        let decoded = try JSONDecoder().decode(CharacterResponseDTO.self, from: data)
-        let items = decoded.results.map {
-            Character(
-                id: $0.id,
-                name: $0.name,
-                imageURL: $0.image,
-                status: $0.status,
-                species: $0.species,
-                gender: $0.gender
-            )
+        do {
+            let data = try await service.fetchCharacters(page: page, name: name)
+            let decoded = try JSONDecoder().decode(CharacterResponseDTO.self, from: data)
+            let items = decoded.results.map {
+                Character(
+                    id: $0.id,
+                    name: $0.name,
+                    imageURL: $0.image,
+                    status: $0.status,
+                    species: $0.species,
+                    gender: $0.gender
+                )
+            }
+            return CharacterList(results: items, pages: decoded.info.pages)
+        } catch let error as NetworkError {
+            throw mapNetworkErrorToRepositoryError(error)
+        } catch {
+            throw error
         }
-        return CharacterList(results: items, pages: decoded.info.pages)
     }
     
+    private func mapNetworkErrorToRepositoryError(_ error: NetworkError) -> RepositoryError {
+        switch error {
+        case .invalidURL:
+            return .custom("error_invalid_url")
+        case .invalidResponse:
+            return .custom("error_invalid_response")
+        case .statusCode(let code):
+            if code == 404 {
+                return .custom("error_no_results")
+            } else {
+                return .custom("error_server_generic")
+            }
+        case .underlying:
+            return .custom("error_network_generic")
+        }
+    }
 }
 
 
