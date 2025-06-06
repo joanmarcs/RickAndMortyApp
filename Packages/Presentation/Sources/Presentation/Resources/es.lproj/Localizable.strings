@@ -22,3 +22,16 @@
 "error_unknown" = "Ha ocurrido un error desconocido.";
 "error_alert_title" = "Error";
 "general_accept" = "Aceptar";
+"filters_title" = "Filtros";
+"filters_status" = "Estado";
+"filters_gender" = "Género";
+"filters_all" = "Todos";
+"filters_alive" = "Vivo";
+"filters_dead" = "Muerto";
+"filters_unknown" = "Desconocido";
+"filters_female" = "Mujer";
+"filters_male" = "Hombre";
+"filters_genderless" = "Sin género";
+"filters_apply" = "Aplicar";
+"filters_cancel" = "Cancelar";
+"filters_clear" = "Borrar filtros";

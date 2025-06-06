@@ -10,6 +10,7 @@ import SwiftUI
 
 public struct CharacterListView: View {
     @StateObject private var viewModel: CharacterListViewModel
+    @State private var isShowingFilters = false
     
     public init(viewModel: CharacterListViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
@@ -32,6 +33,18 @@ public struct CharacterListView: View {
                     refreshingOverlay
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        isShowingFilters = true
+                    } label: {
+                        Image(systemName: hasActiveFilters
+                              ? "line.horizontal.3.decrease.circle.fill"
+                              : "line.horizontal.3.decrease.circle")
+                        .foregroundColor(hasActiveFilters ? .blue : .primary)
+                    }
+                }
+            }
             .navigationTitle(viewModel.title)
             .searchable(text: $viewModel.searchText,
                         placement: .navigationBarDrawer(displayMode: .automatic),
@@ -51,7 +64,17 @@ public struct CharacterListView: View {
                     })
                 )
             }
+            .sheet(isPresented: $isShowingFilters) {
+                FiltersView(
+                    selectedStatus: $viewModel.selectedStatus,
+                    selectedGender: $viewModel.selectedGender,
+                    localizationService: viewModel.localizationService
+                )
+            }
+            
         }
+        
+        
     }
     
     private var loadingView: some View {
@@ -102,6 +125,7 @@ public struct CharacterListView: View {
             guard viewModel.searchText.isEmpty else { return }
             await viewModel.refreshCharacters()
         }
+        
     }
     
     private var refreshingOverlay: some View {
@@ -115,6 +139,10 @@ public struct CharacterListView: View {
         }
         .zIndex(1)
         .transition(.opacity)
+    }
+    
+    private var hasActiveFilters: Bool {
+        viewModel.selectedStatus != nil || viewModel.selectedGender != nil
     }
 }
 

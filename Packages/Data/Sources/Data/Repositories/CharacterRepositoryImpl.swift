@@ -16,9 +16,9 @@ public final class CharacterRepositoryImpl: CharacterRepository {
         self.service = service
     }
     
-    public func fetchCharacters(page: Int, name: String?) async throws -> CharacterList {
+    public func fetchCharacters(page: Int, name: String?, status: String?, gender: String?) async throws -> CharacterList {
         do {
-            let data = try await service.fetchCharacters(page: page, name: name)
+            let data = try await service.fetchCharacters(page: page, name: name, status: status, gender: gender)
             let decoded = try JSONDecoder().decode(CharacterResponseDTO.self, from: data)
             let items = decoded.results.map {
                 Character(

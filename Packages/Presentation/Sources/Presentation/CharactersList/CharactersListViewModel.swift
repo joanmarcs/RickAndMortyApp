@@ -25,6 +25,8 @@ public final class CharacterListViewModel: ObservableObject {
     @Published public var isRefreshing: Bool = false
     @Published public var isLoading: Bool = false
     @Published public var searchText: String = ""
+    @Published public var selectedStatus: String? = nil
+    @Published public var selectedGender: String? = nil
     
     public init(useCase: FetchCharactersUseCase, localizationService: LocalizationService,
                 coordinator: CharacterListCoordinatorProtocol) {
@@ -36,6 +38,18 @@ public final class CharacterListViewModel: ObservableObject {
         $searchText
             .debounce(for: .milliseconds(400), scheduler: RunLoop.main)
             .removeDuplicates()
+            .sink { [weak self] _ in
+                Task { self?.searchCharacters() }
+            }
+            .store(in: &cancellables)
+        
+        $selectedStatus
+            .sink { [weak self] _ in
+                Task { self?.searchCharacters() }
+            }
+            .store(in: &cancellables)
+
+        $selectedGender
             .sink { [weak self] _ in
                 Task { self?.searchCharacters() }
             }
@@ -61,7 +75,7 @@ public final class CharacterListViewModel: ObservableObject {
         Task { [weak self] in
             guard let self = self else { return }
             do {
-                let newCharacters = try await usecase.execute(page: self.currentPage, name: self.searchText)
+                let newCharacters = try await usecase.execute(page: self.currentPage, name: self.searchText, status: self.selectedStatus, gender: self.selectedGender)
                 let charactersToAdd = newCharacters.results.map {
                     CharacterViewModel(id: $0.id, name: $0.name, image: $0.imageURL, status: $0.status, species: $0.species, gender: $0.gender)
                 }

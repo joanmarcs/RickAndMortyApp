@@ -22,3 +22,16 @@
 "error_unknown" = "An unknown error occurred.";
 "error_alert_title" = "Error";
 "general_accept" = "Ok";
+"filters_title" = "Filters";
+"filters_status" = "Status";
+"filters_gender" = "Gender";
+"filters_all" = "All";
+"filters_alive" = "Alive";
+"filters_dead" = "Dead";
+"filters_unknown" = "Unknown";
+"filters_female" = "Female";
+"filters_male" = "Male";
+"filters_genderless" = "Genderless";
+"filters_apply" = "Apply";
+"filters_cancel" = "Cancel";
+"filters_clear" = "Clear filters";
