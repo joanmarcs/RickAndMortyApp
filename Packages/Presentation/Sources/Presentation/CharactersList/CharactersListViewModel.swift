@@ -19,15 +19,32 @@ public final class CharacterListViewModel: ObservableObject {
     private var currentPage = 1
     private var pages = 1
     
+    private var isLoadingUserConfiguration = false
+    
     @Published public var title: String = ""
     @Published private(set) var characters: [CharacterViewModel] = []
     @Published private(set) var error: String?
     @Published public var isRefreshing: Bool = false
     @Published public var isLoading: Bool = false
     @Published public var searchText: String = ""
-    @Published public var selectedStatus: String? = nil
-    @Published public var selectedGender: String? = nil
-    @Published public var isGrid: Bool = true
+    @Published public var selectedStatus: String? {
+        didSet {
+            guard !isLoadingUserConfiguration else { return }
+            saveUserConfiguration()
+        }
+    }
+    @Published public var selectedGender: String? {
+        didSet {
+            guard !isLoadingUserConfiguration else { return }
+            saveUserConfiguration()
+        }
+    }
+    @Published public var isGrid: Bool = true {
+        didSet {
+            guard !isLoadingUserConfiguration else { return }
+            saveUserConfiguration()
+        }
+    }
     
     public init(useCase: FetchCharactersUseCase, localizationService: LocalizationService,
                 coordinator: CharacterListCoordinatorProtocol) {
@@ -35,6 +52,8 @@ public final class CharacterListViewModel: ObservableObject {
         self.localizationService = localizationService
         self.coordinator = coordinator
         self.title = localizationService.localized("characters_title")
+        
+        loadUserConfiguration()
         
         $searchText
             .debounce(for: .milliseconds(400), scheduler: RunLoop.main)
@@ -111,5 +130,35 @@ public final class CharacterListViewModel: ObservableObject {
     func clearError() {
         error = nil
     }
+    
+    private func saveUserConfiguration() {
+        if let status = selectedStatus {
+            UserDefaults.standard.set(status, forKey: "selectedStatus")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "selectedStatus")
+        }
+
+        if let gender = selectedGender {
+            UserDefaults.standard.set(gender, forKey: "selectedGender")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "selectedGender")
+        }
+        UserDefaults.standard.set(isGrid, forKey: "isGrid")
+    }
+
+    private func loadUserConfiguration() {
+        isLoadingUserConfiguration = true
+        selectedStatus = UserDefaults.standard.string(forKey: "selectedStatus")
+        selectedGender = UserDefaults.standard.string(forKey: "selectedGender")
+        if UserDefaults.standard.object(forKey: "isGrid") != nil {
+            isGrid = UserDefaults.standard.bool(forKey: "isGrid")
+        } else {
+            isGrid = true
+        }
+        isLoadingUserConfiguration = false
+    }
+    
+    
+
 
 }
