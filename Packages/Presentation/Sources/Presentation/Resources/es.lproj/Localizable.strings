@@ -40,3 +40,5 @@
 "episodes" = "Episodios";
 "appears_in_episodes_format" = "Aparece en %d episodios";
 "see_episodes" = "Ver";
+"episode_code" = "Código";
+"air_date" = "Fecha de emisión";

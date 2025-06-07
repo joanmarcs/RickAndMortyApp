@@ -12,5 +12,7 @@ import SwiftUI
 @MainActor
 public protocol CharacterListCoordinatorProtocol {
     func makeCharacterDetail(for character: Character) -> AnyView
+    func makeEpisodesList(for episodeURLs: [String]) -> AnyView
+
 }
 

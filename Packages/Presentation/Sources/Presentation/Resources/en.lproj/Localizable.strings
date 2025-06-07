@@ -39,3 +39,5 @@
 "episodes" = "Episodes";
 "appears_in_episodes_format" = "Appears in %d episodes";
 "see_episodes" = "See";
+"episode_code" = "Code";
+"air_date" = "Air date";

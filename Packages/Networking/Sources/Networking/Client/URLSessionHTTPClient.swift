@@ -32,12 +32,12 @@ public final class URLSessionHTTPClient: HTTPClient {
         request.cachePolicy = config.cachePolicy
         request.timeoutInterval = config.timeout
         
-//        #if DEBUG
-//        print("[HTTP Request] \(method.rawValue) \(url.absoluteString)")
-//        if let queryItems = components.queryItems {
-//            print("Query Items: \(queryItems.map { "\($0.name)=\($0.value ?? "")" }.joined(separator: "&"))")
-//        }
-//        #endif
+        #if DEBUG
+        print("[HTTP Request] \(method.rawValue) \(url.absoluteString)")
+        if let queryItems = components.queryItems {
+            print("Query Items: \(queryItems.map { "\($0.name)=\($0.value ?? "")" }.joined(separator: "&"))")
+        }
+        #endif
         
         do {
             let (data, response) = try await session.data(for: request)
@@ -46,12 +46,12 @@ public final class URLSessionHTTPClient: HTTPClient {
                 throw NetworkError.invalidResponse
             }
             
-//            #if DEBUG
-//           print("[HTTP Response] \(httpResponse.statusCode) from \(url.absoluteString)")
-//           if let responseBody = String(data: data, encoding: .utf8) {
-//               print("Response Body:\n\(responseBody)\n")
-//           }
-//           #endif
+            #if DEBUG
+           print("[HTTP Response] \(httpResponse.statusCode) from \(url.absoluteString)")
+           if let responseBody = String(data: data, encoding: .utf8) {
+               print("Response Body:\n\(responseBody)\n")
+           }
+           #endif
             
             guard (200...299).contains(httpResponse.statusCode) else {
                 throw NetworkError.statusCode(httpResponse.statusCode)
@@ -59,14 +59,14 @@ public final class URLSessionHTTPClient: HTTPClient {
             
             return data
         } catch let error as NetworkError {
-//            #if DEBUG
-//            print("[HTTP Error] \(error)")
-//            #endif
+            #if DEBUG
+            print("[HTTP Error] \(error)")
+            #endif
             throw error
         } catch {
-//            #if DEBUG
-//            print("[HTTP Error] \(error.localizedDescription)")
-//            #endif
+            #if DEBUG
+            print("[HTTP Error] \(error.localizedDescription)")
+            #endif
             throw NetworkError.underlying(error)
         }
     }

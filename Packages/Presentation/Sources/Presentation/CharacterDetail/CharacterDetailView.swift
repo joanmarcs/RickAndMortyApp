@@ -42,6 +42,15 @@ public struct CharacterDetailView: View {
         .sheet(isPresented: $showShareSheet) {
             ActivityView(activityItems: [shareText])
         }
+        .background(
+            NavigationLink(
+                destination: viewModel.coordinator.makeEpisodesList(for: viewModel.character.episodes),
+                isActive: $showEpisodes
+            ) {
+                EmptyView()
+            }
+            .hidden()
+        )
     }
     
     private var characterImage: some View {
@@ -122,12 +131,6 @@ public struct CharacterDetailView: View {
         .cornerRadius(16)
         .shadow(radius: 4)
         .padding(.horizontal)
-        .sheet(isPresented: $showEpisodes) {
-            EpisodesListView(
-                episodes: viewModel.character.episodes,
-                localizationService: viewModel.localizationService
-            )
-        }
     }
 
     

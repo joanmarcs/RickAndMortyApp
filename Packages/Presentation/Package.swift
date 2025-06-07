@@ -12,11 +12,13 @@ let package = Package(
                  targets: ["Presentation"])
     ],
     dependencies: [
-        .package(path: "../Domain")
+        .package(path: "../Domain"),
+        .package(path: "../Data"),
+        .package(path: "../Networking")
     ],
     targets: [
         .target(name: "Presentation",
-                dependencies: ["Domain"],
+                dependencies: ["Domain", "Data", "Networking"],
                 path: "Sources/Presentation",
                 resources: [
                     .process("Resources")
