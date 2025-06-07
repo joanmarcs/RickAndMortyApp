@@ -42,7 +42,6 @@ public struct CharacterListView: View {
                             Image(systemName: viewModel.isGrid
                                   ? "list.bullet"
                                   : "square.grid.3x3.fill")
-                            .foregroundColor(.primary)
                         }
                         Button {
                             isShowingFilters = true
@@ -50,7 +49,7 @@ public struct CharacterListView: View {
                             Image(systemName: hasActiveFilters
                                   ? "line.horizontal.3.decrease.circle.fill"
                                   : "line.horizontal.3.decrease.circle")
-                            .foregroundColor(hasActiveFilters ? .blue : .primary)
+                            .foregroundColor(.blue)
                         }
                     }
                 }

@@ -17,14 +17,18 @@ final class CharacterViewModel: ObservableObject {
     let status: String
     let species: String
     let gender: String
+    let locationName: String
+    let episodes: [String]
     
-    public init(id: Int, name: String, image: String, status: String, species: String, gender: String) {
+    public init(id: Int, name: String, image: String, status: String, species: String, gender: String, locationName: String, episodes: [String]) {
         self.id = id
         self.name = name
         self.imageURL = image
         self.status = status
         self.species = species
         self.gender = gender
+        self.locationName = locationName
+        self.episodes = episodes
     }
 }
 
@@ -36,7 +40,9 @@ extension CharacterViewModel {
             imageURL: self.imageURL,
             status: self.status,
             species: self.species,
-            gender: self.gender
+            gender: self.gender,
+            locationName: self.locationName,
+            episodes: self.episodes
         )
     }
 }

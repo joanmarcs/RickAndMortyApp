@@ -97,7 +97,16 @@ public final class CharacterListViewModel: ObservableObject {
             do {
                 let newCharacters = try await usecase.execute(page: self.currentPage, name: self.searchText, status: self.selectedStatus, gender: self.selectedGender)
                 let charactersToAdd = newCharacters.results.map {
-                    CharacterViewModel(id: $0.id, name: $0.name, image: $0.imageURL, status: $0.status, species: $0.species, gender: $0.gender)
+                    CharacterViewModel(
+                        id: $0.id,
+                        name: $0.name,
+                        image: $0.imageURL,
+                        status: $0.status,
+                        species: $0.species,
+                        gender: $0.gender,
+                        locationName: $0.locationName,
+                        episodes: $0.episodes
+                    )
                 }
                 pages = newCharacters.pages
                 if currentPage == 1 {

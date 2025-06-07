@@ -24,6 +24,11 @@ public final class DefaultLocalizationService: LocalizationService {
     public func localized(_ key: String) -> String {
         NSLocalizedString(key, bundle: bundle, comment: "")
     }
+
+    public func localized(_ key: String, _ args: CVarArg...) -> String {
+        let format = NSLocalizedString(key, bundle: bundle, comment: "")
+        return String(format: format, arguments: args)
+    }
 }
 
 

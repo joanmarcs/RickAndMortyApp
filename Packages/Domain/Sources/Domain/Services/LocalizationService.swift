@@ -9,4 +9,5 @@ import Foundation
 
 public protocol LocalizationService {
     func localized(_ key: String) -> String
+    func localized(_ key: String, _ args: CVarArg...) -> String
 }

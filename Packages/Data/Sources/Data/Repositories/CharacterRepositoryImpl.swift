@@ -27,7 +27,9 @@ public final class CharacterRepositoryImpl: CharacterRepository {
                     imageURL: $0.image,
                     status: $0.status,
                     species: $0.species,
-                    gender: $0.gender
+                    gender: $0.gender,
+                    locationName: $0.location.name,
+                    episodes: $0.episode
                 )
             }
             return CharacterList(results: items, pages: decoded.info.pages)

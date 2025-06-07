@@ -35,3 +35,7 @@
 "filters_apply" = "Apply";
 "filters_cancel" = "Cancel";
 "filters_clear" = "Clear filters";
+"location" = "Location";
+"episodes" = "Episodes";
+"appears_in_episodes_format" = "Appears in %d episodes";
+"see_episodes" = "See";

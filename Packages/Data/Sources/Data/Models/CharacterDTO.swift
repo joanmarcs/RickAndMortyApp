@@ -14,4 +14,6 @@ public struct CharacterDTO: Decodable {
     public let species: String
     public let gender: String
     public let image: String
+    public let location: LocationDTO
+    public let episode: [String]
 }

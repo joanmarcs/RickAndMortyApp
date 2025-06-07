@@ -35,3 +35,8 @@
 "filters_apply" = "Aplicar";
 "filters_cancel" = "Cancelar";
 "filters_clear" = "Borrar filtros";
+"location" = "Localización";
+"location_map" = "Mapa";
+"episodes" = "Episodios";
+"appears_in_episodes_format" = "Aparece en %d episodios";
+"see_episodes" = "Ver";
