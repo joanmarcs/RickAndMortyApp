@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct InfoDTO: Decodable {
+public struct InfoDTO: Codable {
     public let count: Int
     public let pages: Int
     public let next: String?
-    public let pre: String?
+    public let prev: String?
 }

@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct LocationDTO: Decodable {
+public struct LocationDTO: Codable {
     public let name: String
 }

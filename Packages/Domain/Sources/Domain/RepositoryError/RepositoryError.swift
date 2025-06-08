@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum RepositoryError: Error {
+public enum RepositoryError: Error, Equatable {
     case custom(String)
 
     public func localized(using localizationService: LocalizationService) -> String {

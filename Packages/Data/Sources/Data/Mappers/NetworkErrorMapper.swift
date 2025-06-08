@@ -9,8 +9,8 @@ import Foundation
 import Networking
 import Domain
 
-enum NetworkErrorMapper {
-    static func map(_ error: NetworkError) -> RepositoryError {
+public enum NetworkErrorMapper {
+    public static func map(_ error: NetworkError) -> RepositoryError {
         switch error {
         case .invalidURL:
             return .custom("error_invalid_url")

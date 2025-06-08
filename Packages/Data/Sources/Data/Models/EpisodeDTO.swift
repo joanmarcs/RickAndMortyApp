@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EpisodeDTO: Decodable, Identifiable {
+public struct EpisodeDTO: Codable, Identifiable {
     public let id: Int
     public let name: String
     public let air_date: String
