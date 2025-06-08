@@ -13,7 +13,6 @@ import Networking
 final class EpisodeRepositoryImplTests: XCTestCase {
     
     func test_fetchEpisodes_singleEpisode_returnsMappedEpisode() async throws {
-        // Given
         let mockService = MockEpisodeService()
         let dto = EpisodeDTO(id: 1, name: "Pilot", air_date: "2013-12-02", episode: "S01E01")
         
@@ -22,11 +21,9 @@ final class EpisodeRepositoryImplTests: XCTestCase {
         mockService.resultToReturn = try! encoder.encode(dto)
         
         let sut = EpisodeRepositoryImpl(service: mockService)
-        
-        // When
+
         let result = try await sut.fetchEpisodes(episodeIds: [1])
-        
-        // Then
+
         XCTAssertTrue(mockService.fetchEpisodesCalled)
         XCTAssertEqual(mockService.fetchEpisodesParams, [1])
         XCTAssertEqual(result.count, 1)
@@ -34,7 +31,6 @@ final class EpisodeRepositoryImplTests: XCTestCase {
     }
     
     func test_fetchEpisodes_multipleEpisodes_returnsMappedEpisodes() async throws {
-        // Given
         let mockService = MockEpisodeService()
         let dtos = [
             EpisodeDTO(id: 1, name: "Pilot", air_date: "2013-12-02", episode: "S01E01"),
@@ -47,10 +43,8 @@ final class EpisodeRepositoryImplTests: XCTestCase {
         
         let sut = EpisodeRepositoryImpl(service: mockService)
         
-        // When
         let result = try await sut.fetchEpisodes(episodeIds: [1, 2])
-        
-        // Then
+
         XCTAssertTrue(mockService.fetchEpisodesCalled)
         XCTAssertEqual(mockService.fetchEpisodesParams, [1, 2])
         XCTAssertEqual(result.count, 2)
@@ -58,13 +52,11 @@ final class EpisodeRepositoryImplTests: XCTestCase {
     }
     
     func test_fetchEpisodes_networkError_throwsMappedError() async {
-        // Given
         let mockService = MockEpisodeService()
         mockService.errorToThrow = NetworkError.invalidResponse
         
         let sut = EpisodeRepositoryImpl(service: mockService)
         
-        // When / Then
         do {
             _ = try await sut.fetchEpisodes(episodeIds: [1])
             XCTFail("Expected to throw error")
