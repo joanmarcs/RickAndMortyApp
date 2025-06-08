@@ -8,8 +8,8 @@
 import Foundation
 
 public struct InfoDTO: Decodable {
-  public let count: Int
-  public let pages: Int
-  public let next: String?
-  public let pre: String?
+    public let count: Int
+    public let pages: Int
+    public let next: String?
+    public let pre: String?
 }
