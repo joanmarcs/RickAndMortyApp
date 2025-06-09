@@ -11,7 +11,7 @@
 		E6411B042DEF7E0F0067E8B1 /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = E6411B032DEF7E0F0067E8B1 /* Data */; };
 		E6411B062DEF7E120067E8B1 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = E6411B052DEF7E120067E8B1 /* Networking */; };
 		E6411B082DEF7E150067E8B1 /* Presentation in Frameworks */ = {isa = PBXBuildFile; productRef = E6411B072DEF7E150067E8B1 /* Presentation */; };
-		E664E79F2DF635810016C8B0 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = E664E79E2DF635810016C8B0 /* TestPlan.xctestplan */; };
+		E6D0F5F12DF63935008367EA /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = E6D0F5EF2DF63935008367EA /* TestPlan.xctestplan */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,8 +35,27 @@
 		E6411ACE2DEF7B420067E8B1 /* RickAndMortyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6411ADE2DEF7B430067E8B1 /* RickAndMortyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RickAndMortyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6411AE82DEF7B430067E8B1 /* RickAndMortyAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RickAndMortyAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E664E79E2DF635810016C8B0 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
+		E6D0F5EF2DF63935008367EA /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E664E7BB2DF638FA0016C8B0 /* Exceptions for "RickAndMortyAppUITests" folder in "RickAndMortyAppUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RickAndMortyAppUITests.swift,
+				UITestsIdentifiers.swift,
+			);
+			target = E6411AE72DEF7B430067E8B1 /* RickAndMortyAppUITests */;
+		};
+		E6A84A952DF6BE0400C7B317 /* Exceptions for "RickAndMortyAppUITests" folder in "RickAndMortyApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RickAndMortyAppUITests.swift,
+				UITestsIdentifiers.swift,
+			);
+			target = E6411ACD2DEF7B420067E8B1 /* RickAndMortyApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E6411AD02DEF7B420067E8B1 /* RickAndMortyApp */ = {
@@ -47,6 +66,15 @@
 		E6411AFF2DEF7DE80067E8B1 /* Packages */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		E664E7B52DF6382F0016C8B0 /* RickAndMortyAppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E6A84A952DF6BE0400C7B317 /* Exceptions for "RickAndMortyAppUITests" folder in "RickAndMortyApp" target */,
+				E664E7BB2DF638FA0016C8B0 /* Exceptions for "RickAndMortyAppUITests" folder in "RickAndMortyAppUITests" target */,
+			);
+			path = RickAndMortyAppUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -83,11 +111,12 @@
 		E6411AC52DEF7B420067E8B1 = {
 			isa = PBXGroup;
 			children = (
-				E664E79E2DF635810016C8B0 /* TestPlan.xctestplan */,
 				E6411AFF2DEF7DE80067E8B1 /* Packages */,
 				E6411AD02DEF7B420067E8B1 /* RickAndMortyApp */,
+				E664E7B52DF6382F0016C8B0 /* RickAndMortyAppUITests */,
 				E6411B002DEF7E070067E8B1 /* Frameworks */,
 				E6411ACF2DEF7B420067E8B1 /* Products */,
+				E6D0F5EF2DF63935008367EA /* TestPlan.xctestplan */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +155,7 @@
 			fileSystemSynchronizedGroups = (
 				E6411AD02DEF7B420067E8B1 /* RickAndMortyApp */,
 				E6411AFF2DEF7DE80067E8B1 /* Packages */,
+				E664E7B52DF6382F0016C8B0 /* RickAndMortyAppUITests */,
 			);
 			name = RickAndMortyApp;
 			packageProductDependencies = (
@@ -233,7 +263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E664E79F2DF635810016C8B0 /* TestPlan.xctestplan in Resources */,
+				E6D0F5F12DF63935008367EA /* TestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

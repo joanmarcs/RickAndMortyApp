@@ -53,6 +53,7 @@ public struct FiltersView: View {
                 tempGender = selectedGender
             }
         }
+        .accessibilityIdentifier(AccessibilityIdentifier.CharacterList.filtersView)
     }
 
     private var statusSection: some View {

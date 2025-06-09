@@ -62,7 +62,7 @@ public struct EpisodesListView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text("\(episode.id). \(episode.name)")
-                    .font(.headline)
+                    .font(.headline).accessibilityIdentifier(AccessibilityIdentifier.EpisodesList.screen)
 
                 Spacer()
 

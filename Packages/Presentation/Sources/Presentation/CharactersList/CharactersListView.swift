@@ -51,6 +51,7 @@ public struct CharacterListView: View {
                                   : "line.horizontal.3.decrease.circle")
                             .foregroundColor(.blue)
                         }
+                        .accessibilityIdentifier(AccessibilityIdentifier.CharacterList.filtersButton)
                     }
                 }
             }
@@ -82,6 +83,7 @@ public struct CharacterListView: View {
             }
             
         }
+        .accessibilityIdentifier(AccessibilityIdentifier.CharacterList.screen)
         
         
     }

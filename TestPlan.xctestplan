@@ -14,9 +14,9 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Packages\/Presentation",
-        "identifier" : "PresentationTests",
-        "name" : "PresentationTests"
+        "containerPath" : "container:Packages\/Domain",
+        "identifier" : "DomainTests",
+        "name" : "DomainTests"
       }
     },
     {
@@ -28,16 +28,23 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/Domain",
-        "identifier" : "DomainTests",
-        "name" : "DomainTests"
+        "containerPath" : "container:Packages\/Data",
+        "identifier" : "DataTests",
+        "name" : "DataTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/Data",
-        "identifier" : "DataTests",
-        "name" : "DataTests"
+        "containerPath" : "container:RickAndMortyApp.xcodeproj",
+        "identifier" : "E6411AE72DEF7B430067E8B1",
+        "name" : "RickAndMortyAppUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Presentation",
+        "identifier" : "PresentationTests",
+        "name" : "PresentationTests"
       }
     }
   ],

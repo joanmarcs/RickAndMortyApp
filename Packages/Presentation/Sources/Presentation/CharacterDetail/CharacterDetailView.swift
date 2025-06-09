@@ -92,7 +92,7 @@ public struct CharacterDetailView: View {
                 .multilineTextAlignment(.center)
             
             HStack(spacing: 16) {
-                characterInfoWithStatusIcon(title: viewModel.localizationService.localized("status"), value: viewModel.character.status)
+                characterInfoWithStatusIcon(title: viewModel.localizationService.localized("status"), value: viewModel.character.status).accessibilityIdentifier(AccessibilityIdentifier.CharacterDetail.screenTitle)
                 characterInfo(title: viewModel.localizationService.localized("species"), value: viewModel.character.species)
                 characterInfo(title: viewModel.localizationService.localized("gender"), value: viewModel.character.gender)
             }
@@ -124,6 +124,7 @@ public struct CharacterDetailView: View {
                         .font(.subheadline)
                         .fontWeight(.semibold)
                 }
+                .accessibilityIdentifier(AccessibilityIdentifier.CharacterDetail.seeEpisodesButton)
             }
         }
         .padding()

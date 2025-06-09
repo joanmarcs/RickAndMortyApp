@@ -44,6 +44,7 @@ struct CharacterView: View {
                 .lineLimit(2)
                 .frame(height: 40, alignment: .center)
                 .minimumScaleFactor(0.6)
+                .accessibilityIdentifier(AccessibilityIdentifier.CharacterList.characterNamePrefix + "\(viewModel.id)")
         }
         .padding(8)
         .frame(maxWidth: .infinity)
