@@ -48,7 +48,7 @@ iOS App built with SwiftUI that allows exploring characters and episodes from th
 
 ## Project structure
 
-RickAndMortyApp.xcodeproj
+RickAndMortyApp
 ├── Packages
 │   ├── Domain
 │   ├── Data
