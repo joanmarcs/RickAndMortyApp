@@ -50,10 +50,10 @@ iOS App built with SwiftUI that allows exploring characters and episodes from th
 
 RickAndMortyApp
 ├── Packages
-│   ├── Domain
-│   ├── Data
-│   ├── Networking
-│   └── Presentation
+  ├── Domain
+  ├── Data
+  ├── Networking
+  └── Presentation
 ├── RickAndMortyApp (App target)
 ├── RickAndMortyAppUITests
 └── README.md
