@@ -59,7 +59,7 @@ final class CharacterListViewModelTests: XCTestCase {
         
         await viewModel.fetchCharacters()
         
-        try? await Task.sleep(nanoseconds: 300_000_000) // 0.3s
+        try? await Task.sleep(nanoseconds: 300_000_000)
         
         XCTAssertTrue(mockUseCase.executeCalled)
         let charactersCount = await MainActor.run { viewModel.characters.count }

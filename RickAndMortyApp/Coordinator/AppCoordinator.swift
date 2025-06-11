@@ -10,12 +10,14 @@ import Presentation
 import SwiftUI
 
 public final class AppCoordinator {
-    private let dependencies = DependenciesContainer()
+    private let dependencies: DependenciesContainer
     
-    public init() {}
+    public init(dependencies: DependenciesContainer = DependenciesContainer()) {
+        self.dependencies = dependencies
+    }
     
     @MainActor
-    public func start() -> some View {
+    func start() -> some View {
         CharacterListFactory.make(dependencies: dependencies)
     }
 }

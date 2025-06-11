@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Foundation
 import Domain
 import Data
 import Networking
@@ -15,21 +14,31 @@ public final class DependenciesContainer {
     public let client: HTTPClient
     public let localizationService: LocalizationService
     
-    public init() {
-        let config = DefaultNetworkConfig()
-        self.client = URLSessionHTTPClient(config: config)
-        self.localizationService = DefaultLocalizationService()
+    public let characterService: CharacterService
+    public let episodeService: EpisodeService
+    
+    public let characterRepository: CharacterRepository
+    public let episodeRepository: EpisodeRepository
+    
+    public init(
+        client: HTTPClient = URLSessionHTTPClient(config: DefaultNetworkConfig()),
+        localizationService: LocalizationService = DefaultLocalizationService()
+    ) {
+        self.client = client
+        self.localizationService = localizationService
+        
+        self.characterService = CharacterServiceImpl(client: client)
+        self.episodeService = EpisodeServiceImpl(client: client)
+        
+        self.characterRepository = CharacterRepositoryImpl(service: characterService)
+        self.episodeRepository = EpisodeRepositoryImpl(service: episodeService)
     }
     
     public func makeCharacterUseCase() -> FetchCharactersUseCase {
-        let characterService = CharacterServiceImpl(client: client)
-        let characterRepository = CharacterRepositoryImpl(service: characterService)
-        return FetchCharactersUseCaseImpl(repository: characterRepository)
+        FetchCharactersUseCaseImpl(repository: characterRepository)
     }
     
     public func makeFetchEpisodesUseCase() -> FetchEpisodesUseCase {
-        let episodeService = EpisodeServiceImpl(client: client)
-        let episodeRepository = EpisodeRepositoryImpl(service: episodeService)
-        return FetchEpisodesUseCaseImpl(repository: episodeRepository)
+        FetchEpisodesUseCaseImpl(repository: episodeRepository)
     }
 }
