@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Presentation",
     defaultLocalization: "en",
-    platforms: [.iOS(.v15)],
+    platforms: [.iOS(.v17)],
     products: [
         .library(name: "Presentation",
                  targets: ["Presentation"])
