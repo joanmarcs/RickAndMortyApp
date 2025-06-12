@@ -21,6 +21,8 @@ public final class DependenciesContainer {
     public let characterRepository: CharacterRepository
     public let episodeRepository: EpisodeRepository
     
+    public let episodesCache: EpisodesCacheActor
+    
     public init(
         client: HTTPClient = URLSessionHTTPClient(config: DefaultNetworkConfig()),
         localizationService: LocalizationService = DefaultLocalizationService()
@@ -33,6 +35,8 @@ public final class DependenciesContainer {
         
         self.characterRepository = CharacterRepositoryImpl(service: characterService)
         self.episodeRepository = EpisodeRepositoryImpl(service: episodeService)
+        
+        self.episodesCache = EpisodesCacheActor() 
     }
     
     public func makeCharacterUseCase() -> FetchCharactersUseCase {

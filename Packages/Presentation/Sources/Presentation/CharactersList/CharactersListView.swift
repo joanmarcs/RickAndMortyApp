@@ -59,9 +59,6 @@ public struct CharacterListView: View {
             .searchable(text: $viewModel.searchText,
                         placement: .navigationBarDrawer(displayMode: .automatic),
                         prompt: Text(viewModel.localizationService.localized("search_placeholder")))
-            .onAppear {
-                viewModel.fetchCharacters()
-            }
             .alert(isPresented: Binding<Bool>(
                 get: { viewModel.error != nil },
                 set: { _ in }
@@ -80,6 +77,11 @@ public struct CharacterListView: View {
                     selectedGender: $viewModel.selectedGender,
                     localizationService: viewModel.localizationService
                 )
+            }
+            .task {
+                if viewModel.characters.isEmpty {
+                    await viewModel.refreshCharacters()
+                }
             }
     }
     

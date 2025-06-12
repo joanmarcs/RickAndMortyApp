@@ -24,15 +24,17 @@ public final class AppCoordinator: ObservableObject {
     
     private let dependencies = DependenciesContainer()
     
+    private lazy var characterListViewModel = CharacterListViewModel(
+        useCase: dependencies.makeCharacterUseCase(),
+        localizationService: dependencies.localizationService,
+        coordinator: self
+    )
+    
     public init() {}
     
     public func start() -> some View {
         NavigationStack(path: navigationPathBinding) {
-            CharacterListView(viewModel: CharacterListViewModel(
-                useCase: dependencies.makeCharacterUseCase(),
-                localizationService: dependencies.localizationService,
-                coordinator: self
-            ))
+            CharacterListView(viewModel: characterListViewModel)
             .navigationDestination(for: AppDestination.self) { destination in
                 self.destinationView(for: destination)
             }
@@ -52,7 +54,8 @@ public final class AppCoordinator: ObservableObject {
             EpisodesListView(viewModel: EpisodesListViewModel(
                 episodeUrls: episodeUrls,
                 localizationService: dependencies.localizationService,
-                fetchEpisodesUseCase: dependencies.makeFetchEpisodesUseCase()
+                fetchEpisodesUseCase: dependencies.makeFetchEpisodesUseCase(),
+                cache: dependencies.episodesCache
             ))
         }
     }

@@ -14,6 +14,7 @@ final class EpisodesListViewModelTests: XCTestCase {
     func test_fetchEpisodes_success_updatesEpisodes() async throws {
         let mockUseCase = MockFetchEpisodesUseCase()
         let mockLocalizationService = MockLocalizationService()
+        let cache = EpisodesCacheActor()
         
         mockUseCase.resultToReturn = [
             Episode(id: 1, name: "Pilot", airDate: "2017-01-01", code: "S01E01")
@@ -22,7 +23,8 @@ final class EpisodesListViewModelTests: XCTestCase {
         let viewModel = await EpisodesListViewModel(
             episodeUrls: ["https://rickandmortyapi.com/api/episode/1"],
             localizationService: mockLocalizationService,
-            fetchEpisodesUseCase: mockUseCase
+            fetchEpisodesUseCase: mockUseCase,
+            cache: cache
         )
         
         await viewModel.fetchEpisodes()
@@ -44,13 +46,15 @@ final class EpisodesListViewModelTests: XCTestCase {
     func test_fetchEpisodes_failure_setsError() async throws {
         let mockUseCase = MockFetchEpisodesUseCase()
         let mockLocalizationService = MockLocalizationService()
+        let cache = EpisodesCacheActor()
         
         mockUseCase.errorToThrow = RepositoryError.custom("error_network")
         
         let viewModel = await EpisodesListViewModel(
             episodeUrls: ["https://rickandmortyapi.com/api/episode/1"],
             localizationService: mockLocalizationService,
-            fetchEpisodesUseCase: mockUseCase
+            fetchEpisodesUseCase: mockUseCase,
+            cache: cache
         )
         
         await viewModel.fetchEpisodes()
@@ -65,4 +69,5 @@ final class EpisodesListViewModelTests: XCTestCase {
         let error = await MainActor.run { viewModel.error }
         XCTAssertEqual(error, "Localized-error_network")
     }
+    
 }
