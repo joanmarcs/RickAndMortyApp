@@ -23,8 +23,8 @@ final class RickAndMortyAppUITests: XCTestCase {
     }
     
     func test_characterList_displaysCharacters() {
-        let screen = app.otherElements[UITestIdentifiers.CharacterList.screen]
-        XCTAssertTrue(screen.waitForExistence(timeout: 5))
+        let filtersButton = app.buttons.matching(identifier: UITestIdentifiers.CharacterList.filtersButton).firstMatch
+        XCTAssertTrue(filtersButton.waitForExistence(timeout: 5))
         
         let character = app.staticTexts.matching(identifier: UITestIdentifiers.CharacterList.characterNamePrefix + "1").firstMatch
         XCTAssertTrue(character.waitForExistence(timeout: 5))

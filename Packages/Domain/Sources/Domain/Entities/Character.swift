@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Character: Identifiable, Equatable, Sendable {
+public struct Character: Identifiable, Equatable, Sendable, Hashable {
     public let id: Int
     public let name: String
     public let imageURL: String
@@ -28,4 +28,3 @@ public struct Character: Identifiable, Equatable, Sendable {
         self.episodes = episodes
     }
 }
-

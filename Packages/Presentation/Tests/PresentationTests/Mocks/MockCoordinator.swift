@@ -10,11 +10,14 @@ import Domain
 import Presentation
 
 final class MockCharacterListCoordinator: CharacterListCoordinatorProtocol {
-    func makeCharacterDetail(for character: Character) -> AnyView {
-        AnyView(EmptyView())
+    var didNavigateToCharacterDetail: Character?
+    var didNavigateToEpisodes: [String]?
+    
+    func navigateToCharacterDetail(_ character: Character) {
+        didNavigateToCharacterDetail = character
     }
     
-    func makeEpisodesList(for episodeURLs: [String]) -> AnyView {
-        AnyView(EmptyView())
+    func navigateToEpisodes(_ episodeURLs: [String]) {
+        didNavigateToEpisodes = episodeURLs
     }
 }

@@ -5,14 +5,11 @@
 //  Created by Joan Marc Sanahuja on 5/6/25.
 //
 
-import Foundation
-import Domain
 import SwiftUI
+import Domain
 
 @MainActor
 public protocol CharacterListCoordinatorProtocol {
-    func makeCharacterDetail(for character: Character) -> AnyView
-    func makeEpisodesList(for episodeURLs: [String]) -> AnyView
-
+    func navigateToCharacterDetail(_ character: Character)
+    func navigateToEpisodes(_ episodeURLs: [String])
 }
-

@@ -17,7 +17,6 @@ public struct CharacterListView: View {
     }
     
     public var body: some View {
-        NavigationView {
             ZStack {
                 Color(.systemGray6).ignoresSafeArea()
                 
@@ -33,6 +32,7 @@ public struct CharacterListView: View {
                     refreshingOverlay
                 }
             }
+            .accessibilityIdentifier(AccessibilityIdentifier.CharacterList.screen)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
@@ -81,11 +81,6 @@ public struct CharacterListView: View {
                     localizationService: viewModel.localizationService
                 )
             }
-            
-        }
-        .accessibilityIdentifier(AccessibilityIdentifier.CharacterList.screen)
-        
-        
     }
     
     private var loadingView: some View {
@@ -153,8 +148,9 @@ public struct CharacterListView: View {
     
     private var characterItems: some View {
         ForEach(viewModel.characters, id: \.id) { character in
-            let destination = viewModel.coordinator.makeCharacterDetail(for: character.asDomain())
-            NavigationLink(destination: destination) {
+            Button {
+                viewModel.coordinator.navigateToCharacterDetail(character.asDomain())
+            } label: {
                 if viewModel.isGrid {
                     CharacterView(viewModel: character)
                 } else {

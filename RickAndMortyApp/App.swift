@@ -11,7 +11,7 @@ import Presentation
 @main
 struct RickAndMortyApp: App {
     
-    let coordinator = AppCoordinator()
+    @StateObject private var coordinator = AppCoordinator()
     
     init() {
         URLCache.shared = URLCache(

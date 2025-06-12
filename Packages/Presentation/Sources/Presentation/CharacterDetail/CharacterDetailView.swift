@@ -42,15 +42,6 @@ public struct CharacterDetailView: View {
         .sheet(isPresented: $showShareSheet) {
             ActivityView(activityItems: [shareText])
         }
-        .background(
-            NavigationLink(
-                destination: viewModel.coordinator.makeEpisodesList(for: viewModel.character.episodes),
-                isActive: $showEpisodes
-            ) {
-                EmptyView()
-            }
-            .hidden()
-        )
     }
     
     private var characterImage: some View {
@@ -117,9 +108,9 @@ public struct CharacterDetailView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    showEpisodes = true
-                }) {
+                Button {
+                    viewModel.coordinator.navigateToEpisodes(viewModel.character.episodes)
+                } label: {
                     Text(viewModel.localizationService.localized("see_episodes"))
                         .font(.subheadline)
                         .fontWeight(.semibold)

@@ -9,6 +9,7 @@ import Foundation
 import Domain
 import Data
 import Networking
+import Presentation
 
 public final class DependenciesContainer {
     public let client: HTTPClient
