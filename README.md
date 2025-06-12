@@ -14,7 +14,6 @@ iOS App built with SwiftUI that allows exploring characters and episodes from th
 - Full localization support.
 - Remote image loading with caching.
 - Pull-to-refresh support.
-- Optimized UX for both iPhone and iPad.
 
 ## Architecture
 
