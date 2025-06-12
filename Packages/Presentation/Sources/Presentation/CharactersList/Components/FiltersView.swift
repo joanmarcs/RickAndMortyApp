@@ -112,13 +112,9 @@ public struct FiltersView: View {
         }
     }
 
-    private var statusOptions: [String?] {
-        [nil, "alive", "dead", "unknown"]
-    }
+    private let statusOptions: [String?] = [nil, "alive", "dead", "unknown"]
 
-    private var genderOptions: [String?] {
-        [nil, "female", "male", "genderless", "unknown"]
-    }
+    private let genderOptions: [String?] = [nil, "female", "male", "genderless", "unknown"]
 
     private func localizedStatus(_ status: String?) -> String {
         switch status {
