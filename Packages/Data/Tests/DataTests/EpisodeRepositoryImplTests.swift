@@ -20,7 +20,8 @@ final class EpisodeRepositoryImplTests: XCTestCase {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         mockService.resultToReturn = try! encoder.encode(dto)
         
-        let sut = EpisodeRepositoryImpl(service: mockService)
+        let cache = EpisodesCacheActor()
+        let sut = EpisodeRepositoryImpl(service: mockService, cache: cache)
 
         let result = try await sut.fetchEpisodes(episodeIds: [1])
 
@@ -41,7 +42,9 @@ final class EpisodeRepositoryImplTests: XCTestCase {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         mockService.resultToReturn = try! encoder.encode(dtos)
         
-        let sut = EpisodeRepositoryImpl(service: mockService)
+        let cache = EpisodesCacheActor()
+        let sut = EpisodeRepositoryImpl(service: mockService, cache: cache)
+
         
         let result = try await sut.fetchEpisodes(episodeIds: [1, 2])
 
@@ -55,7 +58,9 @@ final class EpisodeRepositoryImplTests: XCTestCase {
         let mockService = MockEpisodeService()
         mockService.errorToThrow = NetworkError.invalidResponse
         
-        let sut = EpisodeRepositoryImpl(service: mockService)
+        let cache = EpisodesCacheActor()
+        let sut = EpisodeRepositoryImpl(service: mockService, cache: cache)
+
         
         do {
             _ = try await sut.fetchEpisodes(episodeIds: [1])
