@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Domain
 
 public struct CharacterDTO: Codable {
     public let id: Int
@@ -16,4 +17,8 @@ public struct CharacterDTO: Codable {
     public let image: String
     public let location: LocationDTO
     public let episode: [String]
+    
+    public func toDomain() -> Character {
+        return Character(id: id, name: name, imageURL: image, status: status, species: species, gender: gender, locationName: location.name, episodes: episode)
+    }
 }
