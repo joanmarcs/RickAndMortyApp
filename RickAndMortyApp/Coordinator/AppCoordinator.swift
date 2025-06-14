@@ -54,8 +54,7 @@ public final class AppCoordinator: ObservableObject {
             EpisodesListView(viewModel: EpisodesListViewModel(
                 episodeUrls: episodeUrls,
                 localizationService: dependencies.localizationService,
-                fetchEpisodesUseCase: dependencies.makeFetchEpisodesUseCase(),
-                cache: dependencies.episodesCache
+                fetchEpisodesUseCase: dependencies.makeFetchEpisodesUseCase()
             ))
         }
     }

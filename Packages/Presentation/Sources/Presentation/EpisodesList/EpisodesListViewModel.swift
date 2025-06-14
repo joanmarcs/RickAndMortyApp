@@ -7,13 +7,13 @@
 
 import Foundation
 import Domain
+import Data
 
 @MainActor
 public final class EpisodesListViewModel: ObservableObject {
     private let fetchEpisodesUseCase: FetchEpisodesUseCase
     private let episodeIds: [Int]
     public let localizationService: LocalizationService
-    private let cache: EpisodesCacheActor
 
     @Published public var episodes: [Episode] = []
     @Published private(set) var error: String?
@@ -21,13 +21,11 @@ public final class EpisodesListViewModel: ObservableObject {
 
     public init(episodeUrls: [String],
                 localizationService: LocalizationService,
-                fetchEpisodesUseCase: FetchEpisodesUseCase,
-                cache: EpisodesCacheActor) {
+                fetchEpisodesUseCase: FetchEpisodesUseCase) {
         
         self.episodeIds = EpisodeURLParser.episodeIds(from: episodeUrls)
         self.localizationService = localizationService
         self.fetchEpisodesUseCase = fetchEpisodesUseCase
-        self.cache = cache
     }
 
     public func fetchEpisodes()  {
@@ -36,15 +34,8 @@ public final class EpisodesListViewModel: ObservableObject {
         
         let useCase = self.fetchEpisodesUseCase
         Task {
-            if let cachedEpisodes = await cache.getEpisodes(ids: episodeIds) {
-                self.episodes = cachedEpisodes
-                isLoading = false
-                return
-            }
-            
             do {
                 let episodes = try await useCase.execute(episodeIds: episodeIds)
-                await cache.saveEpisodes(episodes)
                 self.episodes = episodes
             } catch {
                 if let repositoryError = error as? RepositoryError {

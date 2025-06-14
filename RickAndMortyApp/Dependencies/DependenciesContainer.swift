@@ -33,10 +33,10 @@ public final class DependenciesContainer {
         self.characterService = CharacterServiceImpl(client: client)
         self.episodeService = EpisodeServiceImpl(client: client)
         
-        self.characterRepository = CharacterRepositoryImpl(service: characterService)
-        self.episodeRepository = EpisodeRepositoryImpl(service: episodeService)
+        self.episodesCache = EpisodesCacheActor()
         
-        self.episodesCache = EpisodesCacheActor() 
+        self.characterRepository = CharacterRepositoryImpl(service: characterService)
+        self.episodeRepository = EpisodeRepositoryImpl(service: episodeService, cache: episodesCache)
     }
     
     public func makeCharacterUseCase() -> FetchCharactersUseCase {
